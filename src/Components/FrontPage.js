@@ -17,13 +17,16 @@ UIManager.setLayoutAnimationEnabledExperimental(true);
 let deviceWidth = Dimensions.get('window').width;
 let deviceHeight = Dimensions.get('window').height;
 
+
 export default class FrontPage extends Component {
     
     constructor(props) {
         super(props);
         this.state = {
             anim: new Animated.Value(0),
-            swipe: true
+            swipe: false,
+            loginLogoff: true,
+            screen: Dimensions.get('window'),
         }
     }
     
@@ -50,75 +53,155 @@ export default class FrontPage extends Component {
         }
     };
     
+    componentDidUpdate() {
+        this.getOrientation();
+        this.getStyle();
+        // this.onLayout();
+    }
+    
+    
+    getOrientation() {
+        if (this.state.screen.width > this.state.screen.height) {
+            return 'LANDSCAPE';
+        } else {
+            return 'PORTRAIT';
+        }
+    }
+    
+    getStyle() {
+        if (this.getOrientation() === 'LANDSCAPE') {
+            return landscapeStyles;
+        } else {
+            return styles;
+        }
+    }
+    
+    onLayout() {
+        this.setState({screen: Dimensions.get('window')});
+    }
+    
+    
     swipeUp = () => {
         LayoutAnimation.configureNext(this.animateLayout);
         this.setState({swipe: !this.state.swipe})
     };
     
+    logIn = () => {
+        LayoutAnimation.configureNext(this.animateLayout);
+        this.setState({loginLogoff: true})
+    };
+    logOff = () => {
+        LayoutAnimation.configureNext(this.animateLayout);
+        this.setState({loginLogoff: false})
+    };
+    
     
     render() {
         return (
-            <Animated.View style={styles.frontPage}>
+            <Animated.View style={[styles.frontPage, this.getStyle().container]} onLayout={this.onLayout.bind(this)}>
                 <Animated.View style={styles.backgroundImageView}>
                     <Animated.Image
                         source={require('../Assets/image/backGround.png')}
                         style={styles.backgroundImage}
                     />
-                    
+                
                 </Animated.View>
                 <Animated.View style={this.state.swipe ? styles.viewAll : styles.viewAllFalse}>
                     <Animated.Image
                         source={require('../Assets/image/coin2.png')}
-                        style={{position: 'absolute',width:400,height:400}}
+                        style={{position: 'absolute', width: 400, height: 400}}
                     />
                     <Animated.View style={styles._header}>
                         <Animated.Text style={styles.titleText}>B$D</Animated.Text>
-                        
+                    
                     </Animated.View>
                     
                     <Animated.View style={this.state.swipe ? styles._footer : styles._footerScaled}>
                         <Animated.View style={styles.sliderContainerStyle}>
                             {!this.state.swipe &&
                             <View style={styles.loginItems}>
-                                <Animated.View>
-                                    <Animated.Text style={[styles.fontSize4,styles.loginStyle]}>Login</Animated.Text>
+                                <Animated.View
+                                    style={{flexDirection: 'row', width: 50, justifyContent: 'space-between'}}>
+                                    <TouchableOpacity>
+                                        <Animated.View style={styles.loginStyle}>
+                                            
+                                            <Animated.Text onPress={this.logIn}
+                                                           style={[styles.fontSize4]}>Login</Animated.Text>
+                                        </Animated.View>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity>
+                                        <Animated.View style={styles.loginStyle}>
+                                            <Animated.Text onPress={this.logOff}
+                                                           style={[styles.fontSize4]}>Sign
+                                                Up</Animated.Text>
+                                        </Animated.View>
+                                    </TouchableOpacity>
                                 </Animated.View>
-                                <View style={[styles.flex1]}>
-                                    <View style={styles.userName}>
-                                        <View style={{flex:1}}>
-                                            <Image
-                                                source={require('../Assets/image/user.png')}
-                                                style={styles.smallImage}
-                                            />
+                                {this.state.loginLogoff ?
+                                    <View style={[styles.flex1]}>
+                                        <View style={styles.userName}>
+                                            <View style={{flex: 1}}>
+                                                <Image
+                                                    source={require('../Assets/image/user.png')}
+                                                    style={styles.smallImage}
+                                                />
+                                            </View>
+                                            <View style={styles.boxes}>
+                                                <Animated.Text style={styles.fontSize3}>Username</Animated.Text>
+                                            </View>
                                         </View>
-                                        <View style={styles.boxes}>
-                                            <Animated.Text style={styles.fontSize3}>Full name</Animated.Text>
-                                        </View>
-                                    </View>
-                                    <View style={styles.userName}>
-                                        <View style={{flex:1}}>
-                                            <Image
-                                                source={require('../Assets/image/message.png')}
-                                                style={styles.smallImage}
-                                            />
-                                        </View>
-                                        <View style={styles.boxes}>
-                                            <Animated.Text style={styles.fontSize3}>Email address</Animated.Text>
-                                        </View>
-                                    </View>
-                                    <View style={styles.userName}>
-                                        <View style={{flex:1}}>
-                                            <Image
-                                                source={require('../Assets/image/padlock.png')}
-                                                style={styles.smallImage}
-                                            />
-                                        </View>
-                                        <View style={styles.boxes}>
-                                            <Animated.Text style={styles.fontSize3}>Password</Animated.Text>
+                                        <View style={styles.userName}>
+                                            <View style={{flex: 1}}>
+                                                <Image
+                                                    source={require('../Assets/image/padlock.png')}
+                                                    style={styles.smallImage}
+                                                />
+                                            </View>
+                                            <View style={styles.boxes}>
+                                                <Animated.Text style={styles.fontSize3}>Password</Animated.Text>
+                                            </View>
                                         </View>
                                     </View>
-                                </View>
-                                <View style={{width:deviceWidth/6,height:deviceHeight/8}}>
+                                    :
+                                    
+                                    <View style={[styles.flex1]}>
+                                        <View style={styles.userName}>
+                                            <View style={{flex: 1}}>
+                                                <Image
+                                                    source={require('../Assets/image/user.png')}
+                                                    style={styles.smallImage}
+                                                />
+                                            </View>
+                                            <View style={styles.boxes}>
+                                                <Animated.Text style={styles.fontSize3}>Full name</Animated.Text>
+                                            </View>
+                                        </View>
+                                        <View style={styles.userName}>
+                                            <View style={{flex: 1}}>
+                                                <Image
+                                                    source={require('../Assets/image/message.png')}
+                                                    style={styles.smallImage}
+                                                />
+                                            </View>
+                                            <View style={styles.boxes}>
+                                                <Animated.Text style={styles.fontSize3}>Email address</Animated.Text>
+                                            </View>
+                                        </View>
+                                        <View style={styles.userName}>
+                                            <View style={{flex: 1}}>
+                                                <Image
+                                                    source={require('../Assets/image/padlock.png')}
+                                                    style={styles.smallImage}
+                                                />
+                                            </View>
+                                            <View style={styles.boxes}>
+                                                <Animated.Text style={styles.fontSize3}>Password</Animated.Text>
+                                            </View>
+                                        </View>
+                                    </View>
+                                    
+                                }
+                                <View style={{width: deviceWidth / 6, height: deviceHeight / 8}}>
                                     <TouchableOpacity style={styles.swipeButton} onPress={this.swipeUp}>
                                         <Animated.Image
                                             source={require('../Assets/image/pointing-up-arrow.png')}
@@ -145,6 +228,18 @@ export default class FrontPage extends Component {
         );
     }
 }
+
+
+const landscapeStyles = StyleSheet.create({
+    frontPage: {
+        // flex: 1,
+        backgroundColor: 'yellow',
+        width: 10,
+        height: 10
+    },
+});
+
+
 const styles = StyleSheet.create({
     frontPage: {
         flex: 1,
@@ -235,22 +330,22 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        width:deviceWidth/6,
-        marginTop:5,
-        paddingVertical:3
+        width: deviceWidth / 6,
+        marginTop: 5,
+        paddingVertical: 3
     },
-    boxes:{
-        flex:4,
-        backgroundColor:'#f3e6e6',
-        paddingVertical:2,
-        paddingHorizontal:5,
-        borderRadius:20
+    boxes: {
+        flex: 4,
+        backgroundColor: '#f3e6e6',
+        paddingVertical: 2,
+        paddingHorizontal: 5,
+        borderRadius: 20
     },
-    loginStyle:{
-        backgroundColor:'#fff',
-        elevation:2,
-        paddingVertical:6,
-        paddingHorizontal:3,
+    loginStyle: {
+        backgroundColor: '#fff',
+        elevation: 2,
+        paddingVertical: 6,
+        paddingHorizontal: 3,
         borderRadius: 50,
     }
 });
