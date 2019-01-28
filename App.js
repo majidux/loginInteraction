@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
-import Home from "./src/Pages/Home";
+import Home2 from "./src2/Pages/Home2";
 
 
 export default class App extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <Home/>
+        <Home2/>
       </View>
     );
   }

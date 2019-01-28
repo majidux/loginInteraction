@@ -11,6 +11,8 @@ import {
     UIManager
 } from 'react-native';
 
+import {widthPercentageToDP,heightPercentageToDP} from "./Dimen";
+
 UIManager.setLayoutAnimationEnabledExperimental &&
 UIManager.setLayoutAnimationEnabledExperimental(true);
 
@@ -18,7 +20,7 @@ let deviceWidth = Dimensions.get('window').width;
 let deviceHeight = Dimensions.get('window').height;
 
 
-export default class FrontPage extends Component {
+export default class FrontPage2 extends Component {
     
     constructor(props) {
         super(props);
@@ -59,6 +61,7 @@ export default class FrontPage extends Component {
         // this.onLayout();
     }
     
+    component
     
     // getOrientation() {
     //     if (this.state.screen.width > this.state.screen.height) {
@@ -115,7 +118,9 @@ export default class FrontPage extends Component {
                     />
                     <Animated.View style={styles._header}>
                         <Animated.Text style={styles.titleText}>B$D</Animated.Text>
-                    
+                        {
+                            console.warn(widthPercentageToDP('100%'))
+                        }
                     </Animated.View>
                     
                     <Animated.View style={this.state.swipe ? styles._footer : styles._footerScaled}>
@@ -266,7 +271,7 @@ const styles = StyleSheet.create({
     },
     _header: {
         flex: 2,
-        width: deviceWidth,
+        // width: deviceWidth,
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -276,7 +281,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 50,
         borderTopRightRadius: 50,
         marginTop: 20,
-        width: deviceWidth / 4,
+        width: widthPercentageToDP('25%'),
         justifyContent: 'center',
         transform: [
             {scaleX: 5},
@@ -289,7 +294,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 50,
         borderTopRightRadius: 50,
         marginTop: 20,
-        width: deviceWidth / 4,
+        width: widthPercentageToDP('25%'),
         justifyContent: 'center',
         transform: [
             {scaleX: 5},
@@ -316,8 +321,8 @@ const styles = StyleSheet.create({
     fontSize4: {fontSize: 4},
     fontSize3: {fontSize: 3},
     loginItems: {
-        width: deviceWidth,
-        height: deviceHeight / 3.5,
+        width: widthPercentageToDP('50%'),
+        height: heightPercentageToDP('28%'),
         alignItems: 'center',
         justifyContent: 'space-between'
     },
@@ -329,7 +334,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        width: deviceWidth / 6,
+        width: widthPercentageToDP('17%'),
         marginTop: 5,
         paddingVertical: 3
     },
