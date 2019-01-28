@@ -53,7 +53,7 @@ export default class FrontPage2 extends Component {
     };
     
     
-    swipeUp = () => {
+    karim = () => {
         LayoutAnimation.configureNext(this.animateLayout);
         this.setState({swipe: !this.state.swipe})
     };
@@ -73,12 +73,12 @@ export default class FrontPage2 extends Component {
             
             <Animated.View style={styles.frontPage}>
                 
-                <Animated.View style={styles.backgroundImageView}>
+                <Animated.Text style={styles.backgroundImageView}>
                     <Animated.Image
                         source={require('../Assets/image/backGround.png')}
                         style={styles.backgroundImage}
                     />
-                </Animated.View>
+                </Animated.Text>
                 
                 
                 <Animated.View style={this.state.swipe ? styles.viewAllScaled : styles.viewAll}>
@@ -126,7 +126,7 @@ export default class FrontPage2 extends Component {
                                 </View>
                             </View>
                             <View style={styles.swipeButton}>
-                                <TouchableOpacity style={styles.swipeButton} onPress={this.swipeUp}>
+                                <TouchableOpacity style={styles.swipeButton} onPress={this.karim}>
                                     <Image
                                         source={require('../Assets/image/down-arrow.png')}
                                     />
@@ -137,7 +137,7 @@ export default class FrontPage2 extends Component {
                         :
                         <Animated.View style={!this.state.swipe ? styles._footer : styles._footerScaled}>
                             <View style={styles.swipeButton}>
-                                <TouchableOpacity style={styles.swipeButton} onPress={this.swipeUp}>
+                                <TouchableOpacity style={styles.swipeButton} onPress={this.karim}>
                                     <Image
                                         source={require('../Assets/image/pointing-up-arrow.png')}
                                     />
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     _header: {
-        flex: 2,
+        flex: 3,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 130,
         // alignItems: 'center',
         justifyContent: 'center',
-        paddingTop:40
+        paddingTop: 40
     },
     _footerScaled: {
         backgroundColor: '#fff',
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
         // justifyContent: 'center',
         borderTopLeftRadius: 130,
         borderTopRightRadius: 130,
-        paddingTop:40
+        paddingTop: 40
     },
     swipeButton: {
         flex: 4,
