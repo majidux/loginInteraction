@@ -11,7 +11,7 @@ import {
     UIManager
 } from 'react-native';
 
-import {widthPercentageToDP,heightPercentageToDP} from "./Dimen";
+import {widthPercentage,heightPercentage} from "./Dimen";
 
 UIManager.setLayoutAnimationEnabledExperimental &&
 UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -119,7 +119,7 @@ export default class FrontPage2 extends Component {
                     <Animated.View style={styles._header}>
                         <Animated.Text style={styles.titleText}>B$D</Animated.Text>
                         {
-                            console.warn(widthPercentageToDP('100%'))
+                            console.warn(widthPercentage('100%'))
                         }
                     </Animated.View>
                     
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 50,
         borderTopRightRadius: 50,
         marginTop: 20,
-        width: widthPercentageToDP('25%'),
+        width: widthPercentage('25%'),
         justifyContent: 'center',
         transform: [
             {scaleX: 5},
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 50,
         borderTopRightRadius: 50,
         marginTop: 20,
-        width: widthPercentageToDP('25%'),
+        width: widthPercentage('25%'),
         justifyContent: 'center',
         transform: [
             {scaleX: 5},
@@ -321,8 +321,8 @@ const styles = StyleSheet.create({
     fontSize4: {fontSize: 4},
     fontSize3: {fontSize: 3},
     loginItems: {
-        width: widthPercentageToDP('50%'),
-        height: heightPercentageToDP('28%'),
+        width: widthPercentage('50%'),
+        height: heightPercentage('28%'),
         alignItems: 'center',
         justifyContent: 'space-between'
     },
@@ -334,7 +334,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        width: widthPercentageToDP('17%'),
+        width: widthPercentage('17%'),
         marginTop: 5,
         paddingVertical: 3
     },

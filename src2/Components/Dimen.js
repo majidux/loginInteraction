@@ -8,7 +8,7 @@ let screenHeight = Dimensions.get('window').height;
 
 @return {number}
 */
-const widthPercentageToDP = widthPercent => {
+const widthPercentage = widthPercent => {
     const elemWidth =parseFloat(widthPercent);
     return PixelRatio.roundToNearestPixel(screenWidth * elemWidth / 100);
 };
@@ -19,7 +19,7 @@ const widthPercentageToDP = widthPercent => {
 * */
 
 
-const heightPercentageToDP = heightPercent => {
+const heightPercentage = heightPercent => {
     const elemHeight = parseFloat(heightPercent);
     return PixelRatio.roundToNearestPixel(screenHeight * elemHeight / 100);
 };
@@ -44,8 +44,8 @@ const removeOrientationListener = () => {
 };
 
 export {
-    widthPercentageToDP,
-    heightPercentageToDP,
+    widthPercentage,
+    heightPercentage,
     listenOrientationChange,
     removeOrientationListener
 };
