@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 import Home2 from "./src2/Pages/Home2";
+import Home from "./src/Pages/Home";
 
 
 export default class App extends Component<Props> {

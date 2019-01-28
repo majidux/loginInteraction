@@ -11,7 +11,7 @@ import {
     UIManager
 } from 'react-native';
 
-import {widthPercentage,heightPercentage} from "./Dimen";
+import {widthPercentage, heightPercentage} from "./Dimen";
 
 UIManager.setLayoutAnimationEnabledExperimental &&
 UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -26,7 +26,7 @@ export default class FrontPage2 extends Component {
         super(props);
         this.state = {
             anim: new Animated.Value(0),
-            swipe: true,
+            swipe: false,
             loginLogoff: true,
             screen: Dimensions.get('window'),
         }
@@ -38,50 +38,19 @@ export default class FrontPage2 extends Component {
             property: 'scaleXY',
             type: 'easeInEaseOut',
             duration: 700,
-            springDamping: 0.2
         },
         update: {
-            property: 'scaleXY',
+            property: 'opacity',
             type: 'easeInEaseOut',
             duration: 700,
-            springDamping: 0.7,
-            initialVelocity: .1
+            // initialVelocity: .1
         },
         delete: {
-            property: 'scaleXY',
-            type: 'spring',
-            duration: 700,
-            springDamping: 0.5
+            property: 'opacity',
+            type: 'easeIn',
+            duration: 400,
         }
     };
-    
-    componentDidUpdate() {
-        // this.getOrientation();
-        // this.getStyle();
-        // this.onLayout();
-    }
-    
-    component
-    
-    // getOrientation() {
-    //     if (this.state.screen.width > this.state.screen.height) {
-    //         return 'LANDSCAPE';
-    //     } else {
-    //         return 'PORTRAIT';
-    //     }
-    // }
-    //
-    // getStyle() {
-    //     if (this.getOrientation() === 'LANDSCAPE') {
-    //         return landscapeStyles;
-    //     } else {
-    //         return styles;
-    //     }
-    // }
-    //
-    // onLayout() {
-    //     this.setState({screen: Dimensions.get('window')});
-    // }
     
     
     swipeUp = () => {
@@ -103,130 +72,83 @@ export default class FrontPage2 extends Component {
         return (
             
             <Animated.View style={styles.frontPage}>
-                {/*<Animated.View style={[styles.frontPage, this.getStyle().container]} onLayout={this.onLayout.bind(this)}>*/}
+                
                 <Animated.View style={styles.backgroundImageView}>
                     <Animated.Image
                         source={require('../Assets/image/backGround.png')}
                         style={styles.backgroundImage}
                     />
-                
                 </Animated.View>
-                <Animated.View style={this.state.swipe ? styles.viewAll : styles.viewAllFalse}>
-                    <Animated.Image
-                        source={require('../Assets/image/coin2.png')}
-                        style={{position: 'absolute', width: 400, height: 400}}
-                    />
-                    <Animated.View style={styles._header}>
-                        <Animated.Text style={styles.titleText}>B$D</Animated.Text>
-                        {
-                            console.warn(widthPercentage('100%'))
-                        }
+                
+                
+                <Animated.View style={this.state.swipe ? styles.viewAllScaled : styles.viewAll}>
+                    <Animated.View style={this.state.swipe ? styles.coinView : styles.coinViewMoved}>
+                        <Animated.Image
+                            source={require('../Assets/image/coin2.png')}
+                            style={styles.coin}
+                        />
+                    </Animated.View>
+                    <Animated.View style={!this.state.swipe ? styles._header : styles._headerScaled}>
+                        {!this.state.swipe && <Animated.Text style={styles.titleText}>B$D</Animated.Text>}
                     </Animated.View>
                     
-                    <Animated.View style={this.state.swipe ? styles._footer : styles._footerScaled}>
-                        <Animated.View style={styles.sliderContainerStyle}>
-                            {!this.state.swipe &&
-                            <View style={styles.loginItems}>
-                                <Animated.View
-                                    style={{flexDirection: 'row', width: 50, justifyContent: 'space-between'}}>
-                                    <TouchableOpacity onPress={this.logIn}>
-                                        <Animated.View style={styles.loginStyle}>
-                                            
-                                            <Animated.Text style={[styles.fontSize4]}>Login</Animated.Text>
-                                        </Animated.View>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={this.logOff}>
-                                        <Animated.View style={styles.loginStyle}>
-                                            <Animated.Text style={[styles.fontSize4]}>Sign Up</Animated.Text>
-                                        </Animated.View>
-                                    </TouchableOpacity>
-                                </Animated.View>
-                                {this.state.loginLogoff ?
-                                    <View style={[styles.flex1]}>
-                                        <View style={styles.userName}>
-                                            <View style={{flex: 1}}>
-                                                <Image
-                                                    source={require('../Assets/image/user.png')}
-                                                    style={styles.smallImage}
-                                                />
-                                            </View>
-                                            <View style={styles.boxes}>
-                                                <Animated.Text style={styles.fontSize3}>Username</Animated.Text>
-                                            </View>
-                                        </View>
-                                        <View style={styles.userName}>
-                                            <View style={{flex: 1}}>
-                                                <Image
-                                                    source={require('../Assets/image/padlock.png')}
-                                                    style={styles.smallImage}
-                                                />
-                                            </View>
-                                            <View style={styles.boxes}>
-                                                <Animated.Text style={styles.fontSize3}>Password</Animated.Text>
-                                            </View>
-                                        </View>
-                                    </View>
-                                    :
-                                    
-                                    <View style={[styles.flex1]}>
-                                        <View style={styles.userName}>
-                                            <View style={{flex: 1}}>
-                                                <Image
-                                                    source={require('../Assets/image/user.png')}
-                                                    style={styles.smallImage}
-                                                />
-                                            </View>
-                                            <View style={styles.boxes}>
-                                                <Animated.Text style={styles.fontSize3}>Full name</Animated.Text>
-                                            </View>
-                                        </View>
-                                        <View style={styles.userName}>
-                                            <View style={{flex: 1}}>
-                                                <Image
-                                                    source={require('../Assets/image/message.png')}
-                                                    style={styles.smallImage}
-                                                />
-                                            </View>
-                                            <View style={styles.boxes}>
-                                                <Animated.Text style={styles.fontSize3}>Email address</Animated.Text>
-                                            </View>
-                                        </View>
-                                        <View style={styles.userName}>
-                                            <View style={{flex: 1}}>
-                                                <Image
-                                                    source={require('../Assets/image/padlock.png')}
-                                                    style={styles.smallImage}
-                                                />
-                                            </View>
-                                            <View style={styles.boxes}>
-                                                <Animated.Text style={styles.fontSize3}>Password</Animated.Text>
-                                            </View>
-                                        </View>
-                                    </View>
-                                    
-                                }
-                                <View style={{width: deviceWidth / 6, height: deviceHeight / 8}}>
-                                    <TouchableOpacity style={styles.swipeButton} onPress={this.swipeUp}>
-                                        <Animated.Image
-                                            source={require('../Assets/image/pointing-up-arrow.png')}
-                                            style={styles.smallImage}
-                                        />
-                                        <Animated.Text style={styles.fontSize4}>Swipe Down</Animated.Text>
-                                    </TouchableOpacity>
+                    
+                    {this.state.swipe ?
+                        <Animated.View style={!this.state.swipe ? styles._footer : styles._footerScaled}>
+                            <View style={styles.box}>
+                                <View style={styles.imageBoxName}>
+                                    <Image
+                                        source={require('../Assets/image/user.png')}
+                                    />
+                                </View>
+                                <View style={styles.boxInside}>
+                                    <Text>Full name</Text>
                                 </View>
                             </View>
-                            }
-                            
-                            
-                            <TouchableOpacity style={styles.swipeButton} onPress={this.swipeUp}>
-                                <Animated.Image
-                                    source={require('../Assets/image/pointing-up-arrow.png')}
-                                    style={styles.smallImage}
-                                />
-                                <Animated.Text style={styles.fontSize4}>Swipe Up</Animated.Text>
-                            </TouchableOpacity>
+                            <View style={styles.box}>
+                                <View style={styles.imageBoxName}>
+                                    <Image
+                                        source={require('../Assets/image/message.png')}
+                                    />
+                                </View>
+                                <View style={styles.boxInside}>
+                                    <Text>Email</Text>
+                                </View>
+                            </View>
+                            <View style={styles.box}>
+                                <View style={styles.imageBoxName}>
+                                    <Image
+                                        source={require('../Assets/image/padlock.png')}
+                                    />
+                                </View>
+                                <View style={styles.boxInside}>
+                                    <Text>Password</Text>
+                                </View>
+                            </View>
+                            <View style={styles.swipeButton}>
+                                <TouchableOpacity style={styles.swipeButton} onPress={this.swipeUp}>
+                                    <Image
+                                        source={require('../Assets/image/down-arrow.png')}
+                                    />
+                                    <Text style={{fontWeight: 'bold'}}>Swipe Down</Text>
+                                </TouchableOpacity>
+                            </View>
                         </Animated.View>
-                    </Animated.View>
+                        :
+                        <Animated.View style={!this.state.swipe ? styles._footer : styles._footerScaled}>
+                            <View style={styles.swipeButton}>
+                                <TouchableOpacity style={styles.swipeButton} onPress={this.swipeUp}>
+                                    <Image
+                                        source={require('../Assets/image/pointing-up-arrow.png')}
+                                    />
+                                    <Text style={{fontWeight: 'bold'}}>Swipe Up</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </Animated.View>
+                        
+                    }
+                
+                
                 </Animated.View>
             </Animated.View>
         );
@@ -234,122 +156,104 @@ export default class FrontPage2 extends Component {
 }
 
 
-// const landscapeStyles = StyleSheet.create({
-//     frontPage: {
-//         // flex: 1,
-//         backgroundColor: 'yellow',
-//         width: 10,
-//         height: 10
-//     },
-// });
-
-
 const styles = StyleSheet.create({
     frontPage: {
         flex: 1,
-        backgroundColor: 'pink',
     },
     flex1: {
         flex: 1
     },
     backgroundImageView: {
-        position: 'absolute'
+        position: 'absolute',
+        flex: 1
     },
     backgroundImage: {
         width: deviceWidth,
         height: deviceHeight,
     },
-    viewAll: {
-        backgroundColor: 'rgba(73, 44, 165,.6)',
-        flex: 1,
-        alignItems: 'center'
+    titleText: {
+        fontSize: 40,
+        color: '#fff',
+        fontWeight: 'bold'
     },
-    viewAllFalse: {
-        backgroundColor: 'rgba(255, 53, 102,.8)',
+    coin: {
+        width: 400,
+        height: 400,
+    },
+    coinView: {
+        position: 'absolute',
         flex: 1,
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    coinViewMoved: {
+        position: 'absolute',
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 100,
+    },
+    viewAll: {
+        backgroundColor: 'rgba(82, 52, 168,.7)',
+        flex: 1,
+    },
+    viewAllScaled: {
+        backgroundColor: 'rgba(255, 50, 103,.8)',
+        flex: 1,
     },
     _header: {
         flex: 2,
-        // width: deviceWidth,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    _headerScaled: {
+        // backgroundColor:'pink',
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
     },
     _footer: {
-        flex: 1,
         backgroundColor: '#fff',
-        borderTopLeftRadius: 50,
-        borderTopRightRadius: 50,
-        marginTop: 20,
-        width: widthPercentage('25%'),
+        flex: 1,
+        borderTopLeftRadius: 130,
+        borderTopRightRadius: 130,
+        // alignItems: 'center',
         justifyContent: 'center',
-        transform: [
-            {scaleX: 5},
-            {scaleY: 2}
-        ]
+        paddingTop:40
     },
     _footerScaled: {
-        flex: 3,
         backgroundColor: '#fff',
-        borderTopLeftRadius: 50,
-        borderTopRightRadius: 50,
-        marginTop: 20,
-        width: widthPercentage('25%'),
-        justifyContent: 'center',
-        transform: [
-            {scaleX: 5},
-            {scaleY: 2}
-        ]
-    },
-    sliderContainerStyle: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        transform: [
-            
-            {scaleY: 2}
-        ]
-    },
-    titleText: {
-        fontSize: 40,
-        fontWeight: 'bold',
-        color: '#fff'
+        flex: 3,
+        // alignItems: 'center',
+        // justifyContent: 'center',
+        borderTopLeftRadius: 130,
+        borderTopRightRadius: 130,
+        paddingTop:40
     },
     swipeButton: {
-        alignItems: 'center'
-    },
-    fontSize4: {fontSize: 4},
-    fontSize3: {fontSize: 3},
-    loginItems: {
-        width: widthPercentage('50%'),
-        height: heightPercentage('28%'),
-        alignItems: 'center',
-        justifyContent: 'space-between'
-    },
-    smallImage: {
-        width: 5,
-        height: 5
-    },
-    userName: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        width: widthPercentage('17%'),
-        marginTop: 5,
-        paddingVertical: 3
-    },
-    boxes: {
         flex: 4,
-        backgroundColor: '#f3e6e6',
-        paddingVertical: 2,
-        paddingHorizontal: 5,
-        borderRadius: 20
+        alignItems: 'center',
+        // backgroundColor: 'red',
+        justifyContent: 'center'
     },
-    loginStyle: {
-        backgroundColor: '#fff',
-        elevation: 2,
-        paddingVertical: 6,
-        paddingHorizontal: 3,
-        borderRadius: 50,
-    }
+    box: {
+        flex: 1,
+        // backgroundColor: 'skyblue',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        paddingHorizontal: 40
+    },
+    boxInside: {
+        backgroundColor: '#e7e7e7',
+        padding: 10,
+        borderRadius: 20,
+        flex: 6
+    },
+    imageBoxName: {
+        marginRight: 10,
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+    },
 });
